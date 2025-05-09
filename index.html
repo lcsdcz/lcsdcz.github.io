@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农民工法律智能助手</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="app-container">
+      <div class="form-container">
+        <div class="form-header">
+          <i class="ri-scales-3-fill header-icon"></i>
+          <h1>农民工法律智能助手</h1>
+          <p>专为农民工提供劳动法律咨询服务</p>
+          <div class="header-actions">
+            <button id="settingsBtn" class="icon-btn" title="设置">
+              <i class="ri-settings-3-line"></i>
+            </button>
+            <button id="historyBtn" class="icon-btn" title="历史记录">
+              <i class="ri-history-line"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 法律咨询表单 -->
+        <form class="legal-form">
+          <h3>劳动争议咨询表</h3>
+
+          <div class="form-group">
+            <h4>农民工信息</h4>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="workerName">姓名：</label>
+                <input type="text" id="workerName" placeholder="请输入姓名">
+              </div>
+              <div class="form-field">
+                <label for="workerIdCard">身份证号：</label>
+                <input type="text" id="workerIdCard" placeholder="请输入身份证号码">
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="workerAddress">籍贯（家庭住址）：</label>
+              <input type="text" id="workerAddress" placeholder="请输入家庭住址">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h4>被告人信息</h4>
+            <div class="form-field">
+              <label for="employerName">单位名称：</label>
+              <input type="text" id="employerName" placeholder="请输入单位名称">
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="employerRepName">负责人姓名：</label>
+                <input type="text" id="employerRepName" placeholder="请输入负责人姓名">
+              </div>
+              <div class="form-field">
+                <label for="employerRepId">负责人身份证号：</label>
+                <input type="text" id="employerRepId" placeholder="请输入负责人身份证号">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h4>相关证据</h4>
+            <div class="evidence-checkboxes">
+              <div class="evidence-item">
+                <input type="checkbox" id="contract" value="劳动合同">
+                <label for="contract">劳动合同</label>
+              </div>
+              <div class="evidence-item">
+                <input type="checkbox" id="timecard" value="打卡记录">
+                <label for="timecard">打卡记录</label>
+              </div>
+              <div class="evidence-item">
+                <input type="checkbox" id="bankrecord" value="工资转账记录">
+                <label for="bankrecord">工资转账记录</label>
+              </div>
+              <div class="evidence-item">
+                <input type="checkbox" id="witness" value="证人证言">
+                <label for="witness">证人证言</label>
+              </div>
+              <div class="evidence-item">
+                <input type="checkbox" id="photos" value="工作照片/视频">
+                <label for="photos">工作照片/视频</label>
+              </div>
+              <div class="evidence-item">
+                <input type="checkbox" id="messages" value="短信/聊天记录">
+                <label for="messages">短信/聊天记录</label>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="otherEvidence">其他证据：</label>
+              <input type="text" id="otherEvidence" placeholder="请描述其他证据">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h4>诉求</h4>
+            <div class="form-row">
+              <div class="form-field">
+                <div class="checkbox-field">
+                  <input type="checkbox" id="hasSalaryAmount" class="toggle-input">
+                  <label for="hasSalaryAmount">支付薪资金额：</label>
+                </div>
+                <div class="input-with-unit">
+                  <input type="number" id="salaryAmount" placeholder="请输入金额" disabled>
+                  <span class="unit">元</span>
+                </div>
+              </div>
+              <div class="form-field">
+                <div class="checkbox-field">
+                  <input type="checkbox" id="hasCompensationAmount" class="toggle-input">
+                  <label for="hasCompensationAmount">赔偿/补偿金额：</label>
+                </div>
+                <div class="input-with-unit">
+                  <input type="number" id="compensationAmount" placeholder="请输入金额" disabled>
+                  <span class="unit">元</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="otherDemands">其他诉求：</label>
+              <textarea id="otherDemands" placeholder="请描述其他诉求"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="submitLegalForm" class="primary-btn">提交咨询</button>
+            <button id="resetForm" type="reset" class="secondary-btn">重置表单</button>
+          </div>
+        </form>
+
+        <div class="examples">
+          <h3>常见案例：</h3>
+          <div class="example-buttons">
+            <button class="example-btn" data-case="wage">拖欠工资案例</button>
+            <button class="example-btn" data-case="injury">工伤赔偿案例</button>
+            <button class="example-btn" data-case="dismiss">无故解雇案例</button>
+            <button class="example-btn" data-case="contract">未签订劳动合同案例</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 结果展示弹窗 -->
+    <div class="modal" id="resultModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>法律咨询结果</h2>
+          <button class="close-btn" id="closeResultBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="resultContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveResultBtn" class="secondary-btn">保存结果</button>
+          <button id="printResultBtn" class="secondary-btn">打印结果</button>
+          <button id="closeResultModalBtn" class="primary-btn">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historical Result Display Modal -->
+    <div class="modal" id="historicalResultModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>历史咨询详情</h2>
+          <button class="close-btn" id="closeHistoricalResultModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="historicalResultContent"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="printHistoricalResultBtn" class="secondary-btn">打印</button>
+          <button id="closeHistoricalResultModalFooterBtn" class="primary-btn">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 设置弹窗 -->
+    <div class="modal" id="settingsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>设置</h2>
+          <button class="close-btn" id="closeSettingsBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-item">
+            <label for="apiKeyInput">OpenAI API 密钥：</label>
+            <input type="password" id="apiKeyInput" placeholder="sk-...">
+          </div>
+          <div class="setting-item">
+            <label for="apiUrlInput">API 接口地址：</label>
+            <input type="text" id="apiUrlInput" placeholder="https://api.openai.com/v1/chat/completions">
+          </div>
+          <div class="setting-item">
+            <label for="modelSelect">模型：</label>
+            <select id="modelSelect">
+              <option value="black-forest-labs/FLUX.1-dev" selected>black-forest-labs/FLUX.1-dev</option>
+              <option value="black-forest-labs/FLUX.1-schnell">black-forest-labs/FLUX.1-schnell</option>
+              <option value="claude-3-7-sonnet">claude-3-7-sonnet</option>
+              <option value="command">command</option>
+              <option value="command-light">command-light</option>
+              <option value="command-light-nightly">command-light-nightly</option>
+              <option value="command-nightly">command-nightly</option>
+              <option value="command-r">command-r</option>
+              <option value="command-r-08-2024">command-r-08-2024</option>
+              <option value="command-r-plus">command-r-plus</option>
+              <option value="command-r-plus-08-2024">command-r-plus-08-2024</option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Llama-70B">deepseek-ai/DeepSeek-R1-Distill-Llama-70B
+              </option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Llama-8B">deepseek-ai/DeepSeek-R1-Distill-Llama-8B</option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B">deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+              </option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B">deepseek-ai/DeepSeek-R1-Distill-Qwen-14B</option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B">deepseek-ai/DeepSeek-R1-Distill-Qwen-32B</option>
+              <option value="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B">deepseek-ai/DeepSeek-R1-Distill-Qwen-7B</option>
+              <option value="deepseek-ai/DeepSeek-R1-fast">deepseek-ai/DeepSeek-R1-fast</option>
+              <option value="deepseek-ai/DeepSeek-V3-0324">deepseek-ai/DeepSeek-V3-0324</option>
+              <option value="deepseek-chat">deepseek-chat</option>
+              <option value="deepseek-reasoner">deepseek-reasoner</option>
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+              <option value="gemini-2.0-flash-001">gemini-2.0-flash-001</option>
+              <option value="gemini-2.0-flash-exp">gemini-2.0-flash-exp</option>
+              <option value="gemini-2.0-flash-exp-image-generation">gemini-2.0-flash-exp-image-generation</option>
+              <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+              <option value="gemini-2.0-flash-lite-001">gemini-2.0-flash-lite-001</option>
+              <option value="gemini-2.0-flash-lite-preview">gemini-2.0-flash-lite-preview</option>
+              <option value="gemini-2.0-flash-lite-preview-02-05">gemini-2.0-flash-lite-preview-02-05</option>
+              <option value="gemini-2.0-flash-thinking-exp">gemini-2.0-flash-thinking-exp</option>
+              <option value="gemini-2.0-flash-thinking-exp-01-21">gemini-2.0-flash-thinking-exp-01-21</option>
+              <option value="gemini-2.0-pro-exp">gemini-2.0-pro-exp</option>
+              <option value="gemini-2.0-pro-exp-02-05">gemini-2.0-pro-exp-02-05</option>
+              <option value="gemini-2.5-pro-exp-03-25">gemini-2.5-pro-exp-03-25</option>
+              <option value="gemini-exp-1206">gemini-exp-1206</option>
+              <option value="glm-4-flash">glm-4-flash</option>
+              <option value="google/gemma-2-27b-it-fast">google/gemma-2-27b-it-fast</option>
+              <option value="gpt-4o">gpt-4o</option>
+              <option value="gpt-4o-mini">gpt-4o-mini</option>
+              <option value="grok-2-1212">grok-2-1212</option>
+              <option value="grok-2-image-1212">grok-2-image-1212</option>
+              <option value="grok-2-vision-1212">grok-2-vision-1212</option>
+              <option value="grok-3-beta">grok-3-beta</option>
+              <option value="grok-3-fast-beta">grok-3-fast-beta</option>
+              <option value="grok-3-mini-beta">grok-3-mini-beta</option>
+              <option value="grok-3-mini-fast-beta">grok-3-mini-fast-beta</option>
+              <option value="grok-beta">grok-beta</option>
+              <option value="grok-vision-beta">grok-vision-beta</option>
+              <option value="moonshot-v1-128k">moonshot-v1-128k</option>
+              <option value="SparkDesk">SparkDesk</option>
+              <option value="SparkDesk-v1.1">SparkDesk-v1.1</option>
+              <option value="SparkDesk-v2.1">SparkDesk-v2.1</option>
+              <option value="SparkDesk-v3.1">SparkDesk-v3.1</option>
+              <option value="SparkDesk-v3.5">SparkDesk-v3.5</option>
+              <option value="SparkDesk-v4.0">SparkDesk-v4.0</option>
+              <option value="xdeepseekr1">xdeepseekr1</option>
+              <option value="yi-large">yi-large</option>
+              <option value="yi-lightning">yi-lightning</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label>自定义模型：</label>
+            <div class="custom-models-container" id="customModelsContainer">
+              <!-- 自定义模型将在这里动态添加 -->
+            </div>
+            <div class="add-model-container">
+              <input type="text" id="newModelNameInput" placeholder="输入模型名称">
+              <button id="addModelBtn" class="add-model-btn">添加</button>
+            </div>
+          </div>
+          <div class="setting-item">
+            <label for="temperatureInput">温度（创造性）：</label>
+            <input type="range" id="temperatureInput" min="0" max="2" step="0.1" value="0.7">
+            <span id="temperatureValue">0.7</span>
+          </div>
+          <div class="setting-item">
+            <label for="systemPromptInput">系统提示词：</label>
+            <textarea id="systemPromptInput" rows="4"
+              placeholder="设置AI助手的行为和特性...">你是一个专业的法律AI助手，拥有丰富的法律知识，特别擅长处理农民工劳动纠纷案件。请基于相关法律法规和司法案例，提供准确、公正的法律意见，并以清晰的时间线形式提供具体指导。你的回答应包含：1.依据法条 2.案情基本分析（依据指导性案例、典型案例和主客观要件） 3.适合农民工的具体措施（证据提交指导、诉讼流程、诉讼时效、保全措施、仲裁方式） 4.以时间线形式列出农民工应该采取的步骤，包括固定证据、申诉等。</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSettingsBtn" class="primary-btn">保存设置</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 历史记录弹窗 -->
+    <div class="modal" id="historyModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>历史记录</h2>
+          <button class="close-btn" id="closeHistoryBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="historyList" class="history-list">
+            <!-- 历史记录将在这里动态添加 -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="clearHistoryBtn" class="secondary-btn">清空历史记录</button>
+          <button id="closeHistoryModalBtn" class="primary-btn">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 确认操作弹窗 -->
+    <div class="modal" id="confirmModal">
+      <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+          <h2 id="confirmModalTitle">确认操作</h2>
+          <button class="close-btn" id="closeConfirmModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="confirmModalMessage">你确定要执行此操作吗？</p>
+        </div>
+        <div class="modal-footer">
+          <button id="confirmModalCancelBtn" class="secondary-btn">取消</button>
+          <button id="confirmModalConfirmBtn" class="primary-btn danger-btn">确认</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- 调试工具 -->
+    <div id="debugPanel"
+      style="position:fixed; bottom:10px; right:10px; z-index:9999; background:#fff; border:1px solid #ccc; padding:10px; display:none;">
+      <h3>调试工具</h3>
+      <button id="testMarkedBtn">测试Marked</button>
+      <button id="testDOMBtn">测试DOM</button>
+      <button id="forceLoadMarkedBtn">强制加载Marked</button>
+      <button id="manualRenderBtn">手动渲染测试</button>
+      <button id="togglePeriodicRenderingBtn">开启定期渲染</button>
+      <button id="closeDebugBtn" style="margin-left:10px;">关闭</button>
+      <div id="debugOutput"
+        style="margin-top:10px; max-height:200px; overflow:auto; border:1px solid #eee; padding:5px;"></div>
+    </div>
+
+    <!-- 调试工具脚本 -->
+    <script>
+      // 按Ctrl+Alt+D显示调试面板
+      document.addEventListener( 'keydown', function ( e ) {
+        if ( e.ctrlKey && e.altKey && e.key === 'd' ) {
+          const debugPanel = document.getElementById( 'debugPanel' );
+          debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
+        }
+      } );
+
+      // 调试工具初始化
+      document.addEventListener( 'DOMContentLoaded', function () {
+        const debugPanel = document.getElementById( 'debugPanel' );
+        const testMarkedBtn = document.getElementById( 'testMarkedBtn' );
+        const testDOMBtn = document.getElementById( 'testDOMBtn' );
+        const forceLoadMarkedBtn = document.getElementById( 'forceLoadMarkedBtn' );
+        const manualRenderBtn = document.getElementById( 'manualRenderBtn' );
+        const togglePeriodicRenderingBtn = document.getElementById( 'togglePeriodicRenderingBtn' );
+        const closeDebugBtn = document.getElementById( 'closeDebugBtn' );
+        const debugOutput = document.getElementById( 'debugOutput' );
+        let periodicRenderingActive = false;
+
+        if ( testMarkedBtn ) {
+          testMarkedBtn.addEventListener( 'click', function () {
+            debugOutput.innerHTML = '';
+
+            try {
+              const markedTest = document.createElement( 'div' );
+              markedTest.id = 'markedTest';
+              document.body.appendChild( markedTest );
+
+              let log = '';
+              log += `marked已定义: ${ typeof marked !== 'undefined' }<br>`;
+
+              if ( typeof marked !== 'undefined' ) {
+                log += `marked.parse已定义: ${ typeof marked.parse === 'function' }<br>`;
+
+                try {
+                  const testResult = marked.parse( '# 测试标题\n\n这是一个测试。' );
+                  log += `解析结果: ${ testResult }<br>`;
+
+                  markedTest.innerHTML = testResult;
+                  log += `渲染结果: 成功<br>`;
+                } catch ( e ) {
+                  log += `解析错误: ${ e.message }<br>`;
+                }
+              }
+
+              document.body.removeChild( markedTest );
+              debugOutput.innerHTML = log;
+            } catch ( e ) {
+              debugOutput.innerHTML = `测试出错: ${ e.message }`;
+            }
+          } );
+        }
+
+        if ( testDOMBtn ) {
+          testDOMBtn.addEventListener( 'click', function () {
+            debugOutput.innerHTML = '';
+
+            try {
+              let log = '';
+
+              const resultContent = document.getElementById( 'resultContent' );
+              log += `resultContent存在: ${ resultContent !== null }<br>`;
+
+              if ( resultContent ) {
+                log += `resultContent可见: ${ window.getComputedStyle( resultContent ).display !== 'none' }<br>`;
+                log += `resultContent父元素: ${ resultContent.parentElement.tagName }<br>`;
+              }
+
+              const historicalResultContent = document.getElementById( 'historicalResultContent' );
+              log += `historicalResultContent存在: ${ historicalResultContent !== null }<br>`;
+
+              if ( historicalResultContent ) {
+                log += `historicalResultContent可见: ${ window.getComputedStyle( historicalResultContent ).display !== 'none' }<br>`;
+                log += `historicalResultContent父元素: ${ historicalResultContent.parentElement.tagName }<br>`;
+              }
+
+              debugOutput.innerHTML = log;
+            } catch ( e ) {
+              debugOutput.innerHTML = `测试出错: ${ e.message }`;
+            }
+          } );
+        }
+
+        if ( forceLoadMarkedBtn ) {
+          forceLoadMarkedBtn.addEventListener( 'click', function () {
+            debugOutput.innerHTML = '强制加载Marked库...';
+
+            const script = document.createElement( 'script' );
+            script.src = 'https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js';
+
+            script.onload = function () {
+              debugOutput.innerHTML += '<br>Marked库加载成功!';
+            };
+
+            script.onerror = function ( e ) {
+              debugOutput.innerHTML += `<br>Marked库加载失败: ${ e.message }`;
+            };
+
+            document.body.appendChild( script );
+          } );
+        }
+
+        if ( manualRenderBtn ) {
+          manualRenderBtn.addEventListener( 'click', function () {
+            debugOutput.innerHTML = '尝试手动渲染测试...';
+
+            // 假设全局变量中有renderMarkdownToElement函数
+            setTimeout( () => {
+              try {
+                if ( typeof renderMarkdownToElement === 'function' ) {
+                  const testMarkdown = "# 渲染测试标题\n\n这是一个**粗体**测试。\n\n- 列表项1\n- 列表项2\n\n```js\nconsole.log('代码测试');\n```";
+
+                  // 打开结果模态框
+                  const resultModal = document.getElementById( 'resultModal' );
+                  if ( resultModal ) {
+                    resultModal.classList.add( 'active' );
+                  }
+
+                  // 调用渲染函数
+                  const success = renderMarkdownToElement( testMarkdown, 'resultContent' );
+
+                  debugOutput.innerHTML += `<br>手动渲染${ success ? '成功' : '失败' }`;
+                } else {
+                  debugOutput.innerHTML += '<br>找不到渲染函数renderMarkdownToElement';
+                }
+              } catch ( e ) {
+                debugOutput.innerHTML += `<br>渲染出错: ${ e.message }`;
+              }
+            }, 100 );
+          } );
+        }
+
+        if ( togglePeriodicRenderingBtn ) {
+          togglePeriodicRenderingBtn.addEventListener( 'click', function () {
+            try {
+              if ( typeof startPeriodicRendering === 'function' && typeof stopPeriodicRendering === 'function' ) {
+                if ( !periodicRenderingActive ) {
+                  startPeriodicRendering( 'resultContent' );
+                  togglePeriodicRenderingBtn.textContent = '关闭定期渲染';
+                  debugOutput.innerHTML = '定期渲染已启动';
+                  periodicRenderingActive = true;
+                } else {
+                  stopPeriodicRendering();
+                  togglePeriodicRenderingBtn.textContent = '开启定期渲染';
+                  debugOutput.innerHTML = '定期渲染已停止';
+                  periodicRenderingActive = false;
+                }
+              } else {
+                debugOutput.innerHTML = '找不到定期渲染函数';
+              }
+            } catch ( e ) {
+              debugOutput.innerHTML = `操作失败: ${ e.message }`;
+            }
+          } );
+        }
+
+        if ( closeDebugBtn ) {
+          closeDebugBtn.addEventListener( 'click', function () {
+            debugPanel.style.display = 'none';
+          } );
+        }
+      } );
+    </script>
+
+    <!-- 使用CDN加载marked，更可靠 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <!-- 备用本地marked -->
+    <script src="marked.min.js" onerror="console.error('无法加载本地marked.min.js');"
+      onload="console.log('本地marked.min.js加载成功');"></script>
+    <script>
+      // 确认marked库是否正确加载
+      window.onload = function () {
+        if ( typeof marked === 'undefined' || typeof marked.parse !== 'function' ) {
+          console.error( 'Marked库未正确加载，尝试重新加载' );
+          const script = document.createElement( 'script' );
+          script.src = 'https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js';
+          document.body.appendChild( script );
+        } else {
+          console.log( 'Marked库已正确加载' );
+        }
+      };
+    </script>
+    <script src="index.js"></script>
+  </body>
+
+</html>
